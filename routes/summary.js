@@ -1,6 +1,5 @@
 import express from "express";
-import summary from "../utility/summary.js";
-import extractEntities from "../utility/entityExtraction.js";
+import summaryAndEntityExtraction from "../utility/summarizationAndEntityExtraction.js";
 
 const router = express.Router();
 
@@ -12,8 +11,7 @@ router.post("/", async (req, res) => {
     });
   }
   try {
-    // const result = await summary(text);
-    const entities = extractEntities(text);
+    const entities = summaryAndEntityExtraction(text);
     res.json(entities);
   } catch (error) {
     console.log(error);

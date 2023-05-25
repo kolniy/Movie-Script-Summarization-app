@@ -11,10 +11,6 @@ const PORT = process.env.PORT || 7000;
 
 //  Define paths for express config
 const publicDirectory = path.join(__dirname, "../public");
-const viewsPath = path.join(__dirname, "../templates/views");
-
-app.set("view engine", "hbs");
-app.set("views", viewsPath);
 
 // setup static directory to serve
 app.use(express.static(publicDirectory));
