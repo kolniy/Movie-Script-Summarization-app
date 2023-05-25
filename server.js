@@ -12,12 +12,6 @@ const PORT = process.env.PORT || 7000;
 app.use(express.json({ extended: false }));
 app.use(express.text());
 
-app.get("/", (req, res) => {
-  res.render("index", {
-    name: "Some username...",
-  });
-});
-
 app.use("/api/v1/summary", textSummaryRoute);
 
 const root = path.join(__dirname, "./client", "build");
