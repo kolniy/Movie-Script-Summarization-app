@@ -9,11 +9,6 @@ const __dirname = path.dirname(fileURLToPath(import.meta.url));
 const app = express();
 const PORT = process.env.PORT || 7000;
 
-//  Define paths for express config
-const publicDirectory = path.join(__dirname, "../public");
-
-// setup static directory to serve
-app.use(express.static(publicDirectory));
 app.use(express.json({ extended: false }));
 app.use(express.text());
 
