@@ -15,7 +15,7 @@ const summarizationAndEntityExtraction = async (text) => {
 
   const chain = new LLMChain({ llm: model, prompt: prompt });
   const res = await chain.call({ file: text });
-  console.log(res);
+  return res;
 };
 
 export default summarizationAndEntityExtraction;

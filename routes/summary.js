@@ -11,7 +11,7 @@ router.post("/", async (req, res) => {
     });
   }
   try {
-    const entities = summaryAndEntityExtraction(text);
+    const entities = await summaryAndEntityExtraction(text);
     res.json(entities);
   } catch (error) {
     console.log(error);

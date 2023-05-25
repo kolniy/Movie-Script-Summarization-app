@@ -25,6 +25,22 @@ app.get("/", (req, res) => {
 
 app.use("/api/v1/summary", textSummaryRoute);
 
+const root = path.join(__dirname, "./client", "build");
+
+// block of code come's after application routes
+if (process.env.NODE_ENV === "production") {
+  // set static files
+  // app.use(express.static("client/build"));
+
+  // app.get("/*", (req, res) => {
+  //   res.sendFile(path.join(__dirname, "../client", "build", "index.html"));
+  // });
+  app.use(express.static(root));
+  app.get("*", (req, res) => {
+    res.sendFile("index.html", { root });
+  });
+}
+
 app.listen(PORT, () => {
   console.log(`Server is running on Port ${PORT}`);
 });
