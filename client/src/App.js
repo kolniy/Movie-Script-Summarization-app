@@ -6,29 +6,39 @@ import "./App.css";
 import formatAiText from "./formatAIText";
 
 function App() {
-  const [script, setScript] = useState("");
+  const [fileData, setFileData] = useState(null);
   const [responseLoading, setResponseLoading] = useState(false);
   const [summaryData, setSummaryData] = useState(null);
 
   const getScriptSummaryAndEntities = async (e) => {
     e.preventDefault();
-    if (script.length === 0) {
-      return alert("Text Script can not be empty.");
+    if (!fileData) {
+      return alert("Document File can not be empty.");
     }
+
+    const formData = new FormData();
+    formData.append("file", fileData);
+
     try {
       setResponseLoading(true);
-      const response = await axios.post("/api/v1/summary", script, {
+      const response = await axios.post("/api/v1/summary", formData, {
         headers: {
-          "Content-Type": "text/plain",
+          "Content-Type": "multipart/form-data",
         },
       });
+      console.log(response.data);
       setSummaryData(formatAiText(response.data.text));
       setResponseLoading(false);
-      setScript("");
     } catch (error) {
+      setResponseLoading(false);
       console.error(error);
       alert("Error generating summary");
     }
+  };
+
+  const handleInputChangeEventHandler = (e) => {
+    const file = e.target.files[0];
+    setFileData(file);
   };
 
   return (
@@ -42,13 +52,14 @@ function App() {
           </p>
           <form onSubmit={getScriptSummaryAndEntities}>
             <div className="form-group">
-              <textarea
-                rows={10}
-                value={script}
-                onChange={(e) => setScript(e.target.value)}
-                className="form-control"
-                placeholder="paste your script here"
-              ></textarea>
+              <label htmlFor="file-input">Click to Upload PDF</label>
+              <input
+                type="file"
+                name="file"
+                className="form-control form-control-file"
+                accept="application/pdf"
+                onChange={(e) => handleInputChangeEventHandler(e)}
+              />
             </div>
             <div className="form-group">
               <button
